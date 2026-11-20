@@ -113,11 +113,31 @@ app.use('/api/ledger', require('./routes/ledgerRoutes'));
 app.use('/api/safezones', require('./routes/safeZoneRoutes'));
 app.use('/api/safe-zones', require('./routes/safeZoneRoutes'));
 
-// 404 Handler
-app.use((req, res) => {
+// Serve compiled client frontend if present (supports unified local port 5000 and Render deployments)
+const fs = require('fs');
+const clientDistPath = path.join(__dirname, '../client/dist');
+if (fs.existsSync(clientDistPath)) {
+  app.use(express.static(clientDistPath));
+}
+
+// 404 Handler for API routes
+app.use('/api', (req, res) => {
   res.status(404).json({
     success: false,
     message: `API Route not found: ${req.method} ${req.originalUrl}`,
+  });
+});
+
+// SPA Fallback for client-side routing (serves index.html for non-API routes)
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api')) return next();
+  const indexPath = path.join(clientDistPath, 'index.html');
+  if (fs.existsSync(indexPath)) {
+    return res.sendFile(indexPath);
+  }
+  res.status(404).json({
+    success: false,
+    message: `Page not found: ${req.originalUrl}. Please build the client or use client dev server on port 5173.`,
   });
 });
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { ToastProvider } from './context/ToastContext';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -21,6 +21,14 @@ import MapPage from './pages/MapPage';
 import NotFound from './pages/NotFound';
 
 function App() {
+  React.useEffect(() => {
+    // Automatically sanitize duplicate slashes (e.g. //dashboard -> /dashboard)
+    if (window.location.pathname.includes('//')) {
+      const sanitized = window.location.pathname.replace(/\/+/g, '/');
+      window.history.replaceState({}, document.title, sanitized + window.location.search);
+    }
+  }, []);
+
   return (
     <ErrorBoundary>
       <AuthProvider>
@@ -39,6 +47,15 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/dashboard/*"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="//dashboard" element={<Navigate to="/dashboard" replace />} />
 
             {/* Marketplace */}
             <Route

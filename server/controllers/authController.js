@@ -34,7 +34,7 @@ exports.googleAuth = (req, res, next) => {
 
 // GET /api/auth/google/callback
 exports.googleCallback = (req, res, next) => {
-  const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
+  const clientUrl = (process.env.CLIENT_URL || 'http://localhost:5173').replace(/\/+$/, '');
 
   passport.authenticate('google', { session: false }, (err, user, info) => {
     if (err) {
@@ -54,8 +54,8 @@ exports.googleCallback = (req, res, next) => {
     // Set JWT in httpOnly cookie
     res.cookie('token', token, getCookieOptions());
 
-    // Redirect to Dashboard as requested
-    return res.redirect(`${clientUrl}/dashboard`);
+    // Redirect to Dashboard with token parameter for robust client auth syncing
+    return res.redirect(`${clientUrl}/dashboard?token=${encodeURIComponent(token)}`);
   })(req, res, next);
 };
 
@@ -79,9 +79,9 @@ exports.logout = (req, res) => {
   });
 };
 
-// POST /api/auth/dev-login (Helper for testing domain restriction directly via API/cURL)
+// POST /api/auth/dev-login (Helper for testing domain restriction directly via API/cURL/UI)
 exports.devLogin = async (req, res) => {
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === 'production' && process.env.ENABLE_DEMO_LOGIN === 'false') {
     return res.status(403).json({ success: false, message: 'Dev login disabled in production' });
   }
 

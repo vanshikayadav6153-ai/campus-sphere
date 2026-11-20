@@ -112,6 +112,28 @@ const Login = () => {
             <ArrowRight className="w-4 h-4 text-slate-400 group-hover:translate-x-0.5 transition-transform ml-auto" />
           </a>
 
+          {/* Quick 1-Click Instant Demo Login (For immediate evaluator access) */}
+          <div className="mt-4">
+            <button
+              onClick={async () => {
+                setIsDevLoading(true);
+                try {
+                  await devLogin('student@gmail.com', 'Vanshika Yadav');
+                  navigate('/dashboard');
+                } catch (err) {
+                  setDevError(err.message || 'Login failed');
+                } finally {
+                  setIsDevLoading(false);
+                }
+              }}
+              disabled={isDevLoading}
+              className="w-full flex items-center justify-center gap-2.5 py-3 px-4 bg-gradient-to-r from-campus-primary to-campus-teal text-white rounded-2xl font-bold text-xs shadow-md hover:opacity-95 transition cursor-pointer"
+            >
+              <Sparkles className="w-4 h-4 text-amber-300" />
+              <span>{isDevLoading ? 'Logging In...' : 'Instant Demo Login (student@gmail.com)'}</span>
+            </button>
+          </div>
+
           {/* First Login Perk Banner */}
           <div className="mt-6 text-center">
             <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-campus-teal bg-campus-teal/10 px-3 py-1.5 rounded-full">
