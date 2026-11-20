@@ -19,8 +19,8 @@ CampusSphere is a domain-gated, peer-to-peer campus platform engineered for veri
 
 > [ADD: Insert project hero banner or preview GIF here]
 
-* **Live Frontend:** [https://campus-sphere.vercel.app](https://campus-sphere.vercel.app) `[ADD: Update with your exact deployed Vercel URL if different]`
-* **API Health Endpoint:** [https://campus-sphere-api.onrender.com/api/health](https://campus-sphere-api.onrender.com/api/health) `[ADD: Update with your Render URL]`
+* **Live Frontend:** [https://campus-sphere-delta.vercel.app](https://campus-sphere-delta.vercel.app) (also: [https://campus-sphere-vanshikayadav6153-ai.vercel.app](https://campus-sphere-vanshikayadav6153-ai.vercel.app))
+* **API Health Endpoint:** [https://campus-sphere-api.onrender.com/api/health](https://campus-sphere-api.onrender.com/api/health) `[Update with your Render backend URL once connected]`
 
 | Landing & Stats | Safe Zones Map | Marketplace Listings |
 | :---: | :---: | :---: |
@@ -64,7 +64,7 @@ CampusSphere is a domain-gated, peer-to-peer campus platform engineered for veri
 
 | Service | Status | Live URL |
 | :--- | :---: | :--- |
-| **Frontend Application (Vercel)** | 🟢 Online | **[https://campus-sphere.vercel.app](https://campus-sphere.vercel.app)** |
+| **Frontend Application (Vercel)** | 🟢 Online | **[https://campus-sphere-delta.vercel.app](https://campus-sphere-delta.vercel.app)** *(Alias: [https://campus-sphere-vanshikayadav6153-ai.vercel.app](https://campus-sphere-vanshikayadav6153-ai.vercel.app))* |
 | **Backend REST API (Render)** | 🟢 Online | **[https://campus-sphere-api.onrender.com/api/health](https://campus-sphere-api.onrender.com/api/health)** |
 | **GitHub Repository** | 📦 Public | **[https://github.com/vanshikayadav6153-ai/campus-sphere](https://github.com/vanshikayadav6153-ai/campus-sphere)** |
 
