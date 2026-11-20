@@ -1,0 +1,17 @@
+{
+  "name": "campus-sphere",
+  "version": "1.0.0",
+  "description": "CampusSphere — A domain-gated student marketplace & cashless skill-barter network",
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
+    "dev:server": "npm run dev --prefix server",
+    "dev:client": "npm run dev --prefix client",
+    "install:all": "npm install && npm install --prefix server && npm install --prefix client",
+    "build:client": "npm run build --prefix client"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "author": "Alpha Coders",
+  "license": "MIT"
+}
