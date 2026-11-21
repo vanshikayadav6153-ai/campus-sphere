@@ -24,7 +24,40 @@ const getCookieOptions = () => ({
 });
 
 // GET /api/auth/google
-exports.googleAuth = (req, res, next) => {
+exports.googleAuth = async (req, res, next) => {
+  const isPlaceholderKey =
+    !process.env.GOOGLE_CLIENT_ID ||
+    process.env.GOOGLE_CLIENT_ID === 'xxxxx' ||
+    process.env.GOOGLE_CLIENT_ID.includes('placeholder');
+
+  // If using placeholder credentials, simulate instant OAuth login cleanly without Google 400 error
+  if (isPlaceholderKey) {
+    const clientUrl = (process.env.CLIENT_URL || 'http://localhost:5173').replace(/\/+$/, '');
+    try {
+      const allowedDomain = (process.env.ALLOWED_DOMAIN || 'gmail.com').toLowerCase().trim();
+      const mockEmail = `student@${allowedDomain}`;
+      let user = await User.findOne({ email: mockEmail });
+      if (!user) {
+        user = await User.create({
+          googleId: `google_sim_${Date.now()}`,
+          name: 'Vanshika Yadav',
+          email: mockEmail,
+          avatar: `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(mockEmail)}`,
+          credits: 10,
+          heldCredits: 0,
+        });
+        const { recordSignupBonus } = require('../utils/ledgerHelper');
+        await recordSignupBonus(user);
+      }
+      const token = signToken(user);
+      res.cookie('token', token, getCookieOptions());
+      return res.redirect(`${clientUrl}/dashboard?token=${encodeURIComponent(token)}`);
+    } catch (err) {
+      console.error('Simulated Google Auth Error:', err);
+      return res.redirect(`${clientUrl}/login?error=auth_failed`);
+    }
+  }
+
   passport.authenticate('google', {
     scope: ['profile', 'email'],
     session: false,

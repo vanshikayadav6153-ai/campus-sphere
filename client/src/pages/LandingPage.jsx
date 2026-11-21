@@ -115,12 +115,12 @@ const LandingPage = () => {
             >
               Sign In
             </Link>
-            <a
-              href={`${API}/api/auth/google`}
+            <Link
+              to="/login"
               className="px-4 py-2 bg-campus-primary hover:bg-campus-teal text-white text-xs font-bold rounded-xl transition shadow-xs"
             >
               Get Started
-            </a>
+            </Link>
           </div>
         </div>
       </header>
@@ -144,8 +144,8 @@ const LandingPage = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a
-              href={`${API}/api/auth/google`}
+            <Link
+              to="/login"
               className="w-full sm:w-auto px-8 py-4 bg-campus-amber hover:bg-campus-rust text-campus-dark hover:text-white font-black text-sm rounded-2xl transition shadow-xl flex items-center justify-center gap-3 cursor-pointer group"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -168,7 +168,7 @@ const LandingPage = () => {
               </svg>
               <span>Continue with Google</span>
               <ArrowRight className="w-4 h-4 text-campus-dark group-hover:translate-x-1 transition" />
-            </a>
+            </Link>
 
             <Link
               to="/login"
